@@ -7,28 +7,53 @@ class GildedRose(object):
 
     def update_quality(self):
         for item in self.items:
-            if item.sell_in < 0 or item.quality <= 0:
+            
+            if item.name != "Sulfuras, Hand of Ragnaros" and item.quality <= 0 and item.sell_in > 0:
+                item.sell_in = item.sell_in - 1
+                break
+                
+            if item.sell_in <= 0 and item.quality <= 0:
                 break
 
             if item.name == "Aged Brie": 
-                if item.quality < 50:
+                if item.sell_in <= 0:
+                    item.quality = 0
+                    
+                elif item.quality < 50:
                     item.quality = item.quality + 1
 
             elif item.name == "Backstage passes to a TAFKAL80ETC concert": 
-                if item.quality < 50:
+                 if item.sell_in <= 0:
+                    item.quality = 0
+                
+                 elif item.quality < 50:
                     item.quality = item.quality + 1
-                    if item.sell_in < 11:
+                    if item.sell_in < 11 and item.quality < 50 :
                         item.quality = item.quality + 1
-                    if item.sell_in < 6:
+                    if item.sell_in < 6 and item.quality < 50:
                         item.quality = item.quality + 1
+                
 
             elif item.name == "Conjured":
-                item.quality = item.quality - 2
+                if item.sell_in > 0 and item.quality >= 2:
+                    item.quality = item.quality - 2
+                elif item.quality >= 4:
+                    item.quality = item.quality - 4
+                else:
+                    item.quality = 0
+                    
                 
             elif item.name != "Sulfuras, Hand of Ragnaros":
-                item.quality = item.quality - 1
+                if item.sell_in > 0 :
+                    item.quality = item.quality - 1
+                elif item.quality >= 2:
+                    item.quality = item.quality - 2
+                else:
+                     item.quality = 0
+            else:
+                item.quality = 80
 
-            if item.name != "Sulfuras, Hand of Ragnaros":
+            if item.name != "Sulfuras, Hand of Ragnaros" and item.sell_in > 0:
                 item.sell_in = item.sell_in - 1
 
 
